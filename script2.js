@@ -14,14 +14,21 @@ function mergeTwoArrays(arrayOne, arrayTwo){
   let shorterArray = arrayOne.length < arrayTwo.length ? arrayOne : arrayTwo;
   let longerArray = arrayOne.length >= arrayTwo.length ? arrayOne : arrayTwo;
 
-  let len = longerArray.length;
-  let k = 0;
+  let len = shorterArray.length;
+      let k = 0;
+      //below for loop with while is pushing the smallerArray values into mergedArray, unless the current values is greater than or equal to the value of longerArray:
   for (let i = 0; i < len; i++){
-    while (shorterArray[k] <= longerArray[i]) {
-      mergedArray.push(shorterArray[k]);
-      k++; //instead of double nested for loops, he used while to evaluate each value off the shorter array one by one (i.e. each value of the longerArray will be added to the mergedArray one after another, unless the current shorterArray value is lower and therefore needs to be added first.)
+    while (shorterArray[i] >= longerArray[k]) {
+      mergedArray.push(longerArray[k]);
+      k++; //basically 2 for loops in 1! Current longerArray value will jump to next only when the current one is pushed into mergedArray.
     }
-    mergedArray.push(longerArray[i]);
+    mergedArray.push(shorterArray[i]);
+  }
+
+  //now, we are picking up where shorterArray index stopped evaluating against longerArray, and pushing everything left into the mergedArray:
+  len = longerArray.length;
+  for (let i = k; i < len; i++) {
+      mergedArray.push(longerArray[i]);
   }
   return mergedArray;
 }
